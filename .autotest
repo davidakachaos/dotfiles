@@ -1,0 +1,15 @@
+# ~.autotest
+require 'autotest/growl'
+SPEAKING = true
+DOOM_EDITION = false
+BUUF = false
+PENDING = false
+STICKY = false
+SUCCESS_SOUND = ''
+FAILURE_SOUND = ''
+AUTOFEATURE=true
+
+Autotest.add_hook :initialize do |at|
+  %w{.git rerun.txt vendor index .DS_Store ._}.each {|exception| at.add_exception(exception)}
+end
+
