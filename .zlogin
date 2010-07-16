@@ -1,1 +1,0 @@
-/Users/davidw/src/config_files/zlogin
