@@ -1,6 +1,6 @@
 [user]
-	name = Ben Orenstein
-	email = ben.orenstein@gmail.com 
+	name = David Westerink
+	email = davidakachaos@gmail.com 
 [alias]
 	co = checkout
 [color]
@@ -12,8 +12,8 @@
         meta = yellow 
 
 [core]
-	excludesfile = /home/beno/.gitignore
-	editor = vim
+	excludesfile = /home/davidw/.gitignore
+	editor = nano
 [apply]
 	whitespace = nowarn
 
