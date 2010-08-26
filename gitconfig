@@ -13,15 +13,22 @@
 
 [core]
 	excludesfile = /home/davidw/.gitignore
-	editor = nano
+	editor = mate -w
 [apply]
 	whitespace = nowarn
 
 [alias]
       lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	st = status
+	ci = commit
+	br = branch
 [help]
 	autocorrect = 1
 [branch]
 	autosetupmerge = true
 [push]
 	default = tracking
+[mergetool]
+	cmd = opendiff
+[merge]
+	tool = opendiff

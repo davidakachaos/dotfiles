@@ -23,10 +23,15 @@ source $ZSH/oh-my-zsh.sh
 source ~/.zsh/cap_completion
 
 # Customize to your needs...
-export PATH=/var/lib/gems/1.8/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/mysql/bin
+export PATH=/var/lib/gems/1.8/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/mysql/bin:~/.rvm/bin
 export AUTOFEATURE=true
 
 #Heroku aliases
 alias heroku:credentials="ruby ~/heroku_credentials.rb"
 alias heroku:default="ruby ~/heroku_switch_default.rb"
 alias heroku:admin="ruby ~/heroku_switch_development.rb"
+
+source ~/.rvm/scripts/rvm
+
+# setup stub for if you use RVM
+if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi

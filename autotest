@@ -10,6 +10,6 @@ FAILURE_SOUND = ''
 AUTOFEATURE=true
 
 Autotest.add_hook :initialize do |at|
-  %w{.git rerun.txt vendor index .DS_Store ._}.each {|exception| at.add_exception(exception)}
+  %w{.git log .hg rerun.txt vendor index .DS_Store ._}.each {|exception| at.add_exception(exception)}
 end
 
