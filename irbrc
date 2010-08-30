@@ -1,4 +1,16 @@
 #!/usr/bin/ruby
+require 'rubygems'
+begin
+  require 'wirble'
+rescue LoadError
+  STDERR.puts "Run `{sudo} gem install wirble` to install wirble"
+end
+begin
+  require 'hirb'
+rescue LoadError
+  STDERR.puts "Run `{sudo} gem install hirb` to install hirb"
+end
+
 require 'irb/completion'
 require 'irb/ext/save-history'
 
