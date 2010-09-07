@@ -1,0 +1,3 @@
+find ./ -name '*.bak' -exec rm {} ; -print
+find ./ -name '*~' -exec rm {} ; -print
+
