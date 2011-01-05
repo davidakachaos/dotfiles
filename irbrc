@@ -1,14 +1,12 @@
 #!/usr/bin/ruby
 require 'rubygems'
 begin
-  require 'wirble'
+  #require 'irbtools/configure'
+  #Irbtools.remove_library('guessmethod')
+  #Irbtools.add_package :more
+  #Irbtools.init
 rescue LoadError
-  STDERR.puts "Run `{sudo} gem install wirble` to install wirble"
-end
-begin
-  require 'hirb'
-rescue LoadError
-  STDERR.puts "Run `{sudo} gem install hirb` to install hirb"
+  STDERR.puts "Run `{sudo} gem install irbtools` to install wirble and others"
 end
 
 require 'irb/completion'
@@ -50,6 +48,7 @@ def paste
   `pbpaste`
 end
 
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV']
-
-
+#Rails 2.x
+load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV'] 
+#If rails 3 the call is different...
+load File.dirname(__FILE__) + '/.railsrc' if $0 == 'script/rails'

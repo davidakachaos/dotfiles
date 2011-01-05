@@ -1,6 +1,6 @@
 [user]
 	name = David Westerink
-	email = davidakachaos@gmail.com 
+	email = davidakachaos@gmail.com
 [alias]
 	co = checkout
 [color]
@@ -26,9 +26,16 @@
 	autocorrect = 1
 [branch]
 	autosetupmerge = true
+	autosetuprebase = always
 [push]
 	default = tracking
 [mergetool]
 	cmd = opendiff
 [merge]
 	tool = opendiff
+[achievement]
+	upload = true
+[sendemail]
+        smtpserver = mail.penthion.com
+        smtpuser = dw
+        smtpserverport = 21

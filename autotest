@@ -1,5 +1,7 @@
 # ~.autotest
 require 'autotest/growl'
+require 'autotest/fsevent'
+
 SPEAKING = true
 DOOM_EDITION = false
 BUUF = false
@@ -7,9 +9,13 @@ PENDING = false
 STICKY = false
 SUCCESS_SOUND = ''
 FAILURE_SOUND = ''
-AUTOFEATURE=true
+# AUTOFEATURE=true
+# RSPEC=true
+
 
 Autotest.add_hook :initialize do |at|
   %w{.git log .hg rerun.txt vendor index .DS_Store ._}.each {|exception| at.add_exception(exception)}
+  at.add_mapping(/spec\/defaults.rb/) do |f, _|
+    at.files_matching %r%^spec/(controllers|helpers|lib|models|views)/.*\.rb$%
+  end
 end
-

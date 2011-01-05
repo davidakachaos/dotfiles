@@ -23,7 +23,8 @@ source $ZSH/oh-my-zsh.sh
 source ~/.zsh/cap_completion
 
 # Customize to your needs...
-export PATH=/var/lib/gems/1.8/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/mysql/bin:~/.rvm/bin
+export PATH=/var/lib/gems/1.8/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/mysql/bin:~/.rvm/bin:/opt/local/lib/postgresql90/bin
+export PATH="$PATH:/Users/davidwesterink/Broncode/git-achievements"
 export AUTOFEATURE=true
 
 #Heroku aliases
@@ -33,5 +34,14 @@ alias heroku:admin="ruby ~/heroku_switch_development.rb"
 
 source ~/.rvm/scripts/rvm
 
+source ~/.git-flow-completion.zsh
+
 # setup stub for if you use RVM
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+
+alias git="git-achievements"
+
+#Git-up config see; http://github.com/aanand/git-up
+GIT_UP_BUNDLER_CHECK='true'
+
+PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"

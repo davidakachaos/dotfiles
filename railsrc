@@ -104,6 +104,7 @@ extend_console 'rails3', defined?(ActiveSupport::Notifications), false do
     name = event.payload[:name]
     sql = event.payload[:sql].gsub("\n", " ").squeeze(" ")
     puts " #{ANSI[:UNDERLINE]}#{color}#{name} (#{time})#{ANSI[:RESET]} #{sql}"
+    puts ''
   end
 end
 
