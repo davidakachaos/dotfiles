@@ -1,16 +1,27 @@
 # ~.autotest
-require 'autotest/growl'
-require 'autotest/fsevent'
+begin
+  require 'autotest/growl'
+rescue
+  puts "Please install 'autotest-growl' for nice notifiers"
+end
+
+begin
+  require 'autotest/fsevent' 
+rescue LoadError
+  puts "Please install 'autotest-fsevent' for faster tests"
+end
+
+require "autotest/restart"
 
 SPEAKING = true
 DOOM_EDITION = false
-BUUF = false
-PENDING = false
-STICKY = false
+BUUF = true
+PENDING = true
+STICKY = true
 SUCCESS_SOUND = ''
 FAILURE_SOUND = ''
 # AUTOFEATURE=true
-# RSPEC=true
+RSPEC=true
 
 
 Autotest.add_hook :initialize do |at|

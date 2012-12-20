@@ -2,7 +2,9 @@
 
 def change_log(stream)
   ActiveRecord::Base.logger = Logger.new(stream)
+  ActionController::Base.logger = Logger.new(stream)
   ActiveRecord::Base.clear_active_connections!
+  ActiveRecord::Base.clear_reloadable_connections!
 end
 
 def show_log
@@ -32,23 +34,23 @@ ANSI[:CYAN] = "\e[36m"
 ANSI[:WHITE] = "\e[37m"
 
 # Log to STDOUT if in Rails
-if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
-  require 'logger'
-  RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
-  #IRB.conf[:USE_READLINE] = true
-  # Build a simple colorful IRB prompt and
-  # Display the RAILS ENV in the prompt
-  # ie : [Development]>> 
-  IRB.conf[:PROMPT][:CUSTOM] = {
-   :PROMPT_N => "#{ANSI[:BLUE]}[#{ENV["RAILS_ENV"].capitalize}]>>#{ANSI[:RESET]} ",
-   :PROMPT_I => "#{ANSI[:BLUE]}[#{ENV["RAILS_ENV"].capitalize}]>>#{ANSI[:RESET]} ",
-   :PROMPT_S => "#{ANSI[:YELLOW]}?>#{ANSI[:RESET]} ",
-   :PROMPT_C => "#{ANSI[:RED]}?>#{ANSI[:RESET]} ",
-   :RETURN => "#{ANSI[:GREEN]}=>#{ANSI[:RESET]} %s\n"
-   }
-  # Set default prompt
-  IRB.conf[:PROMPT_MODE] = :CUSTOM
-end
+# if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
+#   require 'logger'
+#   RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
+#   #IRB.conf[:USE_READLINE] = true
+#   # Build a simple colorful IRB prompt and
+#   # Display the RAILS ENV in the prompt
+#   # ie : [Development]>> 
+#   IRB.conf[:PROMPT][:CUSTOM] = {
+#    :PROMPT_N => "#{ANSI[:BLUE]}[#{ENV["RAILS_ENV"].capitalize}]>>#{ANSI[:RESET]} ",
+#    :PROMPT_I => "#{ANSI[:BLUE]}[#{ENV["RAILS_ENV"].capitalize}]>>#{ANSI[:RESET]} ",
+#    :PROMPT_S => "#{ANSI[:YELLOW]}?>#{ANSI[:RESET]} ",
+#    :PROMPT_C => "#{ANSI[:RED]}?>#{ANSI[:RESET]} ",
+#    :RETURN => "#{ANSI[:GREEN]}=>#{ANSI[:RESET]} %s\n"
+#    }
+#   # Set default prompt
+#   IRB.conf[:PROMPT_MODE] = :CUSTOM
+# end
 require 'yaml'
 
 alias q exit
@@ -144,6 +146,118 @@ end
 
 extend_console 'interactive_editor' do
   # no configuration needed
+end
+
+#interactive create!
+if defined?(ActiveRecord::Base)
+  module InteractiveCU
+    NOT_INTERACTIVE = %w(id created_at updated_at encrypted_password)
+
+    def self.included base
+      base.extend(ClassMethods)
+    end
+
+    def self.read_attributes attrs, klass
+      params = {}
+      attrs.each do |name, value|
+        
+        column = klass.columns_hash[name]
+        
+        if name == 'encrypted_password'
+            print "password (string): "
+            input = gets.strip
+            if input.blank?
+              puts "Using default/original value"
+              next
+            end
+          begin
+            params['password'] = params['password_confirmation'] = eval(input)
+          rescue
+            params['password'] = params['password_confirmation'] = input
+          end
+        end
+        unless NOT_INTERACTIVE.include? name
+          if column
+             print "#{name} (#{column.type.to_s}): " 
+          else
+            print "#{name}: "
+          end
+          input = gets.strip
+          if input.blank?
+            puts "Using default/original value"
+            next
+          end
+          begin
+            params[name] = eval(input)
+          rescue
+            params[name] = input
+          end
+        end
+      end
+      params
+    end
+
+    def self.output(options)
+      puts
+      puts "==#{options[:status]} #{options[:name]}=="
+      puts "You can use ruby code to fill in attributes" if options[:status] == "New"
+      puts
+    end
+
+    def self.validate_errors(obj, attrs)
+      puts
+      puts "Something went wrong:"
+      puts
+      obj.errors.full_messages.each do |error|
+        puts "#{error}"
+      end
+      nil
+    end
+
+    def interactive_update
+      InteractiveCU::output :status => "Old", :name => self.class.name
+      attributes.each do |name, value|
+        puts "#{name}: #{value}"
+      end
+      InteractiveCU::output :status => "New", :name => self.class.name
+
+      new_attributes = InteractiveCU::read_attributes attributes, self.class
+      if new_attributes == {}
+        puts "No changes made"
+      else
+        self.attributes = new_attributes
+
+        unless self.valid?
+          InteractiveCU::validate_errors self, new_attributes
+        else
+          save
+        end
+      end
+    end
+
+    alias_method :iu, :interactive_update
+
+    module ClassMethods
+      def interactive_create
+        InteractiveCU::output :status => "New", :name => self.name
+        obj = self.new
+        new_attributes = InteractiveCU::read_attributes self.new.attribute_names, self.class
+        obj.attributes = new_attributes
+        unless obj.valid?
+          InteractiveCU::validate_errors obj, new_attributes
+        else
+          obj.save
+        end
+      end
+
+      alias_method :ic, :interactive_create
+
+    end
+  end
+
+  class ActiveRecord::Base
+    include InteractiveCU
+  end
 end
 
 # Show results of all extension-loading

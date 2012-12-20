@@ -3,25 +3,64 @@
 	email = davidakachaos@gmail.com
 [alias]
 	co = checkout
+  cp = cherry-pick -x
+	b = branch -v
+  r = remote -v
+  t = tag -l
+  unstage = reset HEAD
+  uncommit = reset --soft HEAD^
+  chunkyadd = add --patch                 # stage commits chunk by chunk
+  amend = commit --amend                  # fix last commit
+  ammend = commit --amend                 # for those who can't spell :-)
+
+  tnp = "!for branch in git branch -a | grep remotes | grep -v HEAD | grep -v master; do git branch --track ${branch##*/} $branch; done; git pull --all"
+  
+  # 'git add -u' handles deleted files, but not new files
+  # 'git add .' handles any current and new files, but not deleted
+  # 'git addall' now handles all changes
+  addall = !sh -c 'git add . && git add -u'
+
+  outgoing = log -u origin/master..master # outgoing changes (in local, but not origin)
+# Handy shortcuts for rebasing
+  rc = rebase --continue
+  rs = rebase --skip
+  ra = rebase --abort
+  fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+  squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+  ri = rebase --interactive --autosquash
+
+# Better log formatting
+  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  filelog = log -u  # show changes to a file
+  changelog = log --pretty=format:\" * %s\"
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+# Global usefull
+  st = status
+  ci = commit
+  br = branch
+  push = push --tags
+  datetag = !git tag `date \"+%Y%m%d%H%M\"`
+	who = !echo \"== Commits by Author:\\n`git shortlog -s -n`\\n\"
+
 [color]
 	diff = auto
 	status = auto
+  interactive = auto
+	ui = auto
 	branch = auto
 
 [color "diff"]
-        meta = yellow 
+  meta = yellow
 
 [core]
-	excludesfile = /home/davidw/.gitignore
+	excludesfile = /Users/davidwesterink/.gitignore
 	editor = mate -w
+	whitespace = trailing-space,space-before-tab
 [apply]
 	whitespace = nowarn
 
-[alias]
-      lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-	st = status
-	ci = commit
-	br = branch
 [help]
 	autocorrect = 1
 [branch]
@@ -33,9 +72,41 @@
 	cmd = opendiff
 [merge]
 	tool = opendiff
+  summay = true
+	stat = true
+	summary = true
 [achievement]
 	upload = true
 [sendemail]
-        smtpserver = mail.penthion.com
-        smtpuser = dw
-        smtpserverport = 21
+  smtpserver = mail.penthion.com
+  smtpuser = dw
+  smtpserverport = 21
+[pivotal]
+	api-token = d3903da981b2bd1bf8e1c8fe0d752697
+	full-name = David Westerink
+	integration-branch = develop
+[gc]
+        auto=1
+[diff]
+	renames = copies
+	mnemonicprefix = true
+[rerere]
+	enabled = true
+
+[merge "railsschema"]
+  name = newer Rails schema version
+  driver = "ruby -e '\n\
+    system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
+    b = File.read(%(%A))\n\
+    b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n=+\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n>+ .*/) do\n\
+                    %(ActiveRecord::Schema.define(:version => #{[$1, $2].max}) do)\n\
+    end\n\
+                File.open(%(%A), %(w)) {|f| f.write(b)}\n\
+                exit 1 if b.include?(%(<)*%L)'"
+[github]
+	user = davidwesterink
+	token = 4ab1c91aed233ed354a984b7d49ed591
+[hooks]
+	global = /Users/davidwesterink/git-hooks/contrib/
+[credential]
+	helper = osxkeychain

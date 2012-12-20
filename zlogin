@@ -21,8 +21,8 @@ export CLICOLOR=1
 setopt prompt_subst
 
 # prompt
-export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
-export PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
+# export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
+# export PS1="\$(~/.rvm/bin/rvm-prompt i v) $PS1"
 
 # autocompletion for ruby_test
 # works with tu/tf aliases
@@ -88,3 +88,6 @@ _cucumber_features() {
   compadd `ls features/**/*.feature | sed "s/features\/\(.*\).feature/\1/"`
 }
 compdef _cucumber_features cuc
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

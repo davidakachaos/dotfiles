@@ -1,4 +1,21 @@
 #!/usr/bin/ruby
+# https://github.com/carlhuda/bundler/issues/183#issuecomment-1149953
+if defined?(::Bundler)
+  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
+  if global_gemset
+    all_global_gem_paths = Dir.glob("#{global_gemset}/gems/*")
+    all_global_gem_paths.each do |p|
+      gem_path = "#{p}/lib"
+      $LOAD_PATH << gem_path
+    end
+  end
+end
+# Use Pry everywhere
+#require "rubygems"
+#require 'pry'
+#Pry.start
+#exit
+
 require 'rubygems'
 begin
   #require 'irbtools/configure'
@@ -7,6 +24,12 @@ begin
   #Irbtools.init
 rescue LoadError
   STDERR.puts "Run `{sudo} gem install irbtools` to install wirble and others"
+end
+
+begin
+# require 'utility_belt'
+rescue
+# STDERR.puts "Run gem install utility_belt to install utility_belt"
 end
 
 require 'irb/completion'
@@ -49,6 +72,14 @@ def paste
 end
 
 #Rails 2.x
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV'] 
+#load File.dirname(__FILE__) + '/.railsrc' if $0 == 'irb' && ENV['RAILS_ENV'] 
 #If rails 3 the call is different...
-load File.dirname(__FILE__) + '/.railsrc' if $0 == 'script/rails'
+#load File.dirname(__FILE__) + '/.railsrc' if $0 == 'script/rails'
+railsrc_path = File.expand_path('~/.railsrc')
+if ( ENV['RAILS_ENV'] || defined? Rails ) && File.exist?( railsrc_path )
+  begin
+    load railsrc_path
+  rescue Exception
+    warn "Could not load: #{ railsrc_path }" # because of $!.message
+  end
+end
