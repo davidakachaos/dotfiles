@@ -43,25 +43,13 @@ alias heroku:publishinn="ruby ~/heroku_switch_publish-inn.rb"
 
 source ~/.aliases
 
-source ~/.rvm/scripts/rvm
-
 # source ~/.git-flow-completion.zsh
 
 #Auto bundle exec
 alias b="bundle exec"
 
-#git achievements
-alias git="git-achievements"
-
-# Todo
-export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
-export TODOTXT_DEFAULT_ACTION=ls
-alias t='todo.sh -d ~/.todo.cfg'
-
 # setup stub for if you use RVM
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
-
-alias git="git-achievements"
 
 #Git-up config see; http://github.com/aanand/git-up
 GIT_UP_BUNDLER_CHECK='true'

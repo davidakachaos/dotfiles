@@ -5,7 +5,7 @@ task :install do
   replace_all = false
   Dir['*'].each do |file|
     next if %w[Rakefile README LICENSE id_rsa.pub].include? file
-    
+
     if File.exist?(File.join(ENV['HOME'], ".#{file}"))
       if replace_all
         replace_file(file)
@@ -29,15 +29,15 @@ task :install do
   end
 
   # Handle ssh pubkey on its own
-  puts "Linking public ssh key"
-  system %Q{mkdir "$HOME/.ssh"}
-  system %Q{rm "$HOME/.ssh/id_rsa.pub"}
-  system %Q{ln -s "$PWD/id_rsa.pub" "$HOME/.ssh/id_rsa.pub"}
-  
+  # puts "Linking public ssh key"
+  # system %Q{mkdir "$HOME/.ssh"}
+  # system %Q{rm "$HOME/.ssh/id_rsa.pub"}
+  # system %Q{ln -s "$PWD/id_rsa.pub" "$HOME/.ssh/id_rsa.pub"}
+
   puts "Linking rmbackup script"
   system %Q{ln -s "$PWD/utils/rmbackup" "$HOME/rmbackup"}
   system %Q{chmod +x "$HOME/rmbackup"}
-  
+
   puts "chmodding remote_ssh_config"
   system %Q{ln -s "$PWD/utils/remote_ssh_config" "$HOME/remote_ssh_config"}
   system %Q{chmod +x "$HOME/remote_ssh_config"}
