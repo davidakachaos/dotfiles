@@ -60,6 +60,9 @@ export TNS_ADMIN="~/.oracle"
 export NLS_LANG="AMERICAN_AMERICA.UTF8"
 #export PATH=$PATH:$DYLD_LIBRARY_PATH
 
+# Git Hooks
+export PATH=$PATH:/Users/davidakachaos/bin/git-hooks
+
 # login show...
 echo
 date

@@ -55,9 +55,10 @@
   meta = yellow
 
 [core]
-	excludesfile = /Users/davidwesterink/.gitignore
+	excludesfile = /Users/davidakachaos/.gitignore
 	editor = mate -w
 	whitespace = trailing-space,space-before-tab
+	autocrlf = true
 [apply]
 	whitespace = nowarn
 
@@ -107,6 +108,8 @@
 	user = davidwesterink
 	token = 4ab1c91aed233ed354a984b7d49ed591
 [hooks]
-	global = /Users/davidwesterink/git-hooks/contrib/
+	global = /Users/davidakachaos/bin/git-hooks/contrib/
 [credential]
 	helper = osxkeychain
+[heroku]
+	account = personal

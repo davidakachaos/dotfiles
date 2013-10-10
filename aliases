@@ -21,6 +21,7 @@ alias glr='fact && git pull --rebase'
 alias h="heroku"
 alias hl="heroku logs -a"
 alias hlt="heroku logs --tail -a"
+alias hrc="heroku run console -a"
 
 alias pa="ps aux"
 
