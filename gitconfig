@@ -58,7 +58,7 @@
 	excludesfile = /Users/davidakachaos/.gitignore
 	editor = mate -w
 	whitespace = trailing-space,space-before-tab
-	autocrlf = true
+	autocrlf = false
 [apply]
 	whitespace = nowarn
 

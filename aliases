@@ -1,4 +1,5 @@
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias git="git-achievements"
 alias migrate="rake db:migrate db:test:prepare"
 alias remigrate="rake db:migrate && rake db:migrate:redo && rake db:schema:dump db:test:prepare"
 alias gadd="fact && git add -u && git add . && git status"

@@ -30,7 +30,7 @@ source ~/.zsh/cap_completion
 
 # Customize to your needs...
 export PATH=/var/lib/gems/1.8/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:~/.rvm/bin
-export PATH="$PATH:/Users/davidwesterink/Broncode/git-achievements"
+export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:/usr/local/Cellar/todo-txt/2.9/bin"
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 export AUTOFEATURE=true
@@ -72,3 +72,5 @@ fortune -a -s
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
+
+eval "$(hub alias -s)"
