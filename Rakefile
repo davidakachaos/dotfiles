@@ -56,7 +56,8 @@ task :install do
   system 'brew tap phinze/homebrew-cask'
   system 'brew install brew-cask'
   puts 'Installing programs, may take a while, get a coffee!'
-  system 'brew cask install rubymine adium firefox google-chrome cyberduck cord gitx-l dropbox'
+  system 'brew cask install heroku-toolbelt skype evernote open-office lastpass-universal rubymine adium firefox google-chrome cyberduck cord gitx-l dropbox f.lux hazel filezilla cyberduck google-drive'
+  puts 'Look in dropbox for licences and such'
 
   puts 'Setting up default paths'
   system 'mkdir ~/bin'
