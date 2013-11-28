@@ -19,11 +19,11 @@ alias gfr="git flow release"
 alias gfrs="git flow release start"
 alias glr='fact && git pull --rebase'
 
-alias h="heroku"
+alias h="fact && heroku"
 alias hl="heroku logs -a"
 alias hlt="heroku logs --tail -a"
 alias hrc="heroku run console -a"
 
 alias pa="ps aux"
 
-alias be="fact && bundle exec"
+alias b="fact && bundle exec"

@@ -112,4 +112,5 @@
 [credential]
 	helper = osxkeychain
 [heroku]
+[heroku]
 	account = personal
