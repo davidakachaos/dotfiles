@@ -1,17 +1,18 @@
 # ~.autotest
-begin
-  require 'autotest/growl'
-rescue
-  puts "Please install 'autotest-growl' for nice notifiers"
-end
+#begin
+#  require 'autotest/growl'
+#rescue
+#  puts "Please install 'autotest-growl' for nice notifiers"
+#end
 
-begin
-  require 'autotest/fsevent' 
-rescue LoadError
-  puts "Please install 'autotest-fsevent' for faster tests"
-end
+#begin
+#  require 'autotest/fsevent' 
+#rescue LoadError
+#  puts "Please install 'autotest-fsevent' for faster tests"
+#end
 
 require "autotest/restart"
+require "autotest/bundler"
 
 SPEAKING = true
 DOOM_EDITION = false
@@ -20,9 +21,9 @@ PENDING = true
 STICKY = true
 SUCCESS_SOUND = ''
 FAILURE_SOUND = ''
-# AUTOFEATURE=true
+AUTOFEATURE=false
 RSPEC=true
-
+CUCUMBER=false
 
 Autotest.add_hook :initialize do |at|
   %w{.git log .hg rerun.txt vendor index .DS_Store ._}.each {|exception| at.add_exception(exception)}

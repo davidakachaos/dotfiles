@@ -15,6 +15,5 @@ test_options:
     upload_results: true
     force_install: false
     force_uninstall_on_failure: false
-custom_shebang: $env ruby_executable_hooks
 install: --no-rdoc --no-ri
 update: --no-rdoc --no-ri

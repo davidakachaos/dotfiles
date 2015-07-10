@@ -13,6 +13,7 @@
   amend = commit --amend                  # fix last commit
   ammend = commit --amend                 # for those who can't spell :-)
 
+  branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
   tnp = "!for branch in git branch -a | grep remotes | grep -v HEAD | grep -v master; do git branch --track ${branch##*/} $branch; done; git pull --all"
   
   # 'git add -u' handles deleted files, but not new files
@@ -55,8 +56,8 @@
   meta = yellow
 
 [core]
-	excludesfile = /Users/davidakachaos/.gitignore
-	editor = mate -w
+	excludesfile = $HOME/.gitignore
+	editor = nano
 	whitespace = trailing-space,space-before-tab
 	autocrlf = false
 [apply]
@@ -114,3 +115,5 @@
 [heroku]
 [heroku]
 	account = personal
+[rebase]
+	autosquash = true
