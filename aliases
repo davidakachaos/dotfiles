@@ -1,16 +1,22 @@
+alias rg="rails generate"
+alias rc="rails console"
+
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias git="git-achievements"
 alias migrate="rake db:migrate db:test:prepare"
 alias remigrate="rake db:migrate && rake db:migrate:redo && rake db:schema:dump db:test:prepare"
-alias gadd="fact && git add -u && git add . && git status"
-alias g="fact && git"
+alias gadd="git add -u && git add . && git status"
+alias g="git"
 alias gci="git pull --rebase && rake && git push"
 alias tlf="tail -f"
 alias lsgraph="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'"
 
+alias sysupgrade="sudo aptitude update && sudo aptitude dist-upgrade -y && sudo apt-get autoclean -y && fact"
+
 alias gcma="git commit -m 'Added'"
 alias gcmf="git commit -m 'Fixed'"
 alias gc-="git checkout --"
+alias gp="git push"
 
 alias gf="fact && git flow"
 alias gff="fact && git flow feature"
@@ -19,11 +25,74 @@ alias gfr="git flow release"
 alias gfrs="git flow release start"
 alias glr='fact && git pull --rebase'
 
-alias h="fact && heroku"
+alias h="heroku"
 alias hl="heroku logs -a"
 alias hlt="heroku logs --tail -a"
 alias hrc="heroku run console -a"
 
 alias pa="ps aux"
 
-alias b="fact && bundle exec"
+alias b="bundle exec"
+
+# See: http://www.christopherbloom.com/2015/02/04/bash-shortcuts-to-run-rails-commands-through-spring-bundler-or-ye-olde-scripts/
+# RUBY / RUBY ON RAILS COMMANDS
+alias bexec='bundle exec'
+alias rails_mv="bexec rails -v | sed 's/Rails \([0-9]\).*/\1/g'"
+# Alias the rake command to Spring binstubs or fallback to "bundle exec"
+# http://goo.gl/HkhHAf, http://goo.gl/STtIvF
+function brake {
+  if [ -f bin/rake ]
+  then
+    bin/rake "$@"
+  else
+    if [ `rails_mv` -lt 3 ]; then 
+      rake "$@"
+    else
+      bexec rake "$@"
+    fi
+  fi 
+}
+function brails {
+  if [ -f bin/rake ]
+  then
+    bin/rails "$@"
+  else
+    bexec rails "$@"
+  fi 
+}
+function cons {
+  if [ `rails_mv` -lt 3 ]; then
+    ./script/console "$@"
+  else
+    brails c "$@"
+  fi
+}
+function dbcons {
+  if [ `rails_mv` -lt 3 ]; then
+    echo "Not supported in this version of Rails (`rails -v`)"
+  else
+    brails db "$@"
+  fi
+}
+function gen {
+  if [ `rails_mv` -lt 3 ]; then
+    ./script/generate "$@"
+  else
+    brails g "$@"
+  fi
+}
+function srv {
+  if [ `rails_mv` -lt 3 ]; then
+    ./script/server "$@"
+  else
+    brails s "$@"
+  fi
+}
+function run {
+  if [ `rails_mv` -lt 3 ]; then
+    ./script/runner "$@"
+  else
+    brails r "$@"
+  fi
+}
+alias sandbox='cons --sandbox'

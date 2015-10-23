@@ -2,9 +2,9 @@
 	name = David Westerink
 	email = davidakachaos@gmail.com
 [alias]
-	co = checkout
+  co = checkout
   cp = cherry-pick -x
-	b = branch -v
+  b = branch -v
   r = remote -v
   t = tag -l
   unstage = reset HEAD
@@ -46,20 +46,19 @@
 	who = !echo \"== Commits by Author:\\n`git shortlog -s -n`\\n\"
 
 [color]
-	diff = auto
-	status = auto
+  diff = auto
+  status = auto
   interactive = auto
-	ui = auto
-	branch = auto
+  ui = auto
+  branch = auto
 
 [color "diff"]
   meta = yellow
 
 [core]
-	excludesfile = $HOME/.gitignore
-	editor = nano
-	whitespace = trailing-space,space-before-tab
-	autocrlf = false
+  excludesfile = $HOME/.gitignore
+  whitespace = trailing-space,space-before-tab
+  autocrlf = false
 [apply]
 	whitespace = nowarn
 
