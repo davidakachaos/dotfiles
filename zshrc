@@ -1,76 +1,161 @@
-# Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.oh-my-zsh
+export PATH="/home/david/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export MEDIUM_INTEGRATION_TOKEN="254cbc496ebc70ba36897eefb6bd4d6650dceac42baeecf97e8bc9cae9e85b19d"
+export MEDIUM_USER_ID="1741fc7fdab31084609c50abc34ab19e7e5677af41e3aeddbd081a371c8e02784"
+source $HOME/.config/antigen.zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/Broncode/git-achievements:$PATH
+# Path to your oh-my-zsh installation.
+export ZSH="/home/david/.oh-my-zsh"
 
-# Set to the name theme to load.
-# Look in ~/.oh-my-zsh/themes/
-export ZSH_THEME="muse"
-# export ZSH_THEME="af-magic"
+# export ANTIGEN_LOG="$HOME/.antigenlog.log"
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle git
+# antigen bundle heroku
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+# Fish-like auto suggestions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle soimort/translate-shell
+# antigen theme wzem
+antigen theme dpoggi
+# PyEnv plugin
+antigen bundle mattberther/zsh-pyenv
 
-# Set to this to use case-sensitive completion
-# export CASE_SENSITIVE="true"
+antigen apply
 
-# Comment this out to disable weekly auto-update checks
-# export DISABLE_AUTO_UPDATE="true"
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="dpoggi"
 
-# Uncomment following line if you want to disable colors in ls
-# export DISABLE_LS_COLORS="true"
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+RM_STAR_SILENT="true"
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(rake rails3 git textmate ruby osx lol autojump cap git-flow rvm brew gem terminitor)
-
-# [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-export EDITOR=vim
-export GIT_EDITOR=vim
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git
+  cp
+  debian
+  git-extras
+  git-flow
+  github
+  pep8
+  pip
+  pyenv
+  pylint
+  python
+  sudo
+  sublime
+  terminator
+  tmux
+  tmuxinator
+  ubuntu
+  vim-interaction
+  vi-mode
+  pipenv
+)
 
 source $ZSH/oh-my-zsh.sh
-# load capistrano completion
-source ~/.zsh/cap_completion
 
-# Customize to your needs...
-export PATH=/var/lib/gems/1.8/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:~/.rvm/bin
-export PATH="$PATH:$HOME/bin"
-export PATH="$PATH:/usr/local/Cellar/todo-txt/2.9/bin"
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-export AUTOFEATURE=true
+# User configuration
 
-#Heroku aliases
-alias heroku:credentials="ruby ~/heroku_credentials.rb"
-alias heroku:default="ruby ~/heroku_switch_default.rb"
-alias heroku:admin="ruby ~/heroku_switch_development.rb"
-alias heroku:publishinn="ruby ~/heroku_switch_publish-inn.rb"
+# export MANPATH="/usr/local/man:$MANPATH"
 
-source ~/.aliases
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
 
-# source ~/.git-flow-completion.zsh
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
-#Auto bundle exec
-alias b="bundle exec"
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-# setup stub for if you use RVM
-if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-#Git-up config see; http://github.com/aanand/git-up
-GIT_UP_BUNDLER_CHECK='true'
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# export DYLD_LIBRARY_PATH="/opt/oracle/instantclient_10_2:/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
-export SQLPATH="/opt/oracle/instantclient_10_2"
-export TNS_ADMIN="~/.oracle"
-export NLS_LANG="AMERICAN_AMERICA.UTF8"
-#export PATH=$PATH:$DYLD_LIBRARY_PATH
+# Add pip to path
+# PATH="$HOME/.local/bin:$PATH"
 
-# Git Hooks
-export PATH=$PATH:/Users/davidakachaos/bin/git-hooks
+source ~/.bin/tmuxinator.zsh
 
-# login show...
-echo
-date
-uptime
-echo
-fortune -a -s
+alias j="fortune && bundle exec jekyll"
+alias js="fortune && bundle exec jekyll serve --draft --incremental"
+alias git="fortune && git-achievements"
+alias scrsv="xscreensaver-command -activate"
+alias jp="fortune && bundle exec jekyll publish _drafts/* && ./post-translator.py"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
-
-eval "$(hub alias -s)"
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+source $HOME/.rvm/scripts/rvm
+export JEKYLL_EDITOR=atom
+# eval "$(pyenv virtualenv-init -)"

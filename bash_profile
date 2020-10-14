@@ -1,52 +1,41 @@
-#!/usr/bin/env bash
+#!/bin/bash
+# Profile file. Runs on login.
 
-source ~/.aliases
+# Adds `~/.scripts` and all subdirectories to $PATH
+export PATH="$PATH:$(du "$HOME/.scripts/" | cut -f2 | tr '\n' ':')"
+export EDITOR="nvim"
+#export TERMINAL="st"
+export TERMINAL="terminator"
+export BROWSER="firefox"
+export READER="zathura"
+export FILE="ranger"
+export BIB="$HOME/Documents/LaTeX/uni.bib"
+export REFER="$HOME/.referbib"
+export SUDO_ASKPASS="$HOME/.scripts/tools/dmenupass"
+export PIX="$HOME/.pix/"
 
-# Load RVM, if you are using it
-[[ -s $HOME/.rvm/scripts/rvm ]] && source $HOME/.rvm/scripts/rvm
+# less/man colors
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-# Add rvm gems and nginx to the path
-export PATH=$PATH:~/.gem/ruby/1.8/bin:/opt/nginx/sbin
+[ ! -f ~/.shortcuts ] && shortcuts >/dev/null 2>&1
 
-# Path to the bash it configuration
-export BASH_IT=$HOME/.bash_it
+echo "$0" | grep "bash$" >/dev/null && [ -f ~/.bashrc ] && source "$HOME/.bashrc"
 
-# Lock and Load a custom theme file
-# location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
+# Start graphical server if i3 not already running.
+[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x i3 >/dev/null && exec startx
 
-# Your place for hosting Git repos. I use this for private repos.
-export GIT_HOSTING='git@git.domain.com'
+# Switch escape and caps if tty:
+sudo -n loadkeys ~/.scripts/ttymaps.kmap 2>/dev/null
 
-# Set my editor and git editor
-export EDITOR="/usr/bin/nano"
-export GIT_EDITOR='/usr/bin/nano'
-
-# Set the path nginx
-export NGINX_PATH='/opt/nginx'
-
-# Don't check mail when opening terminal.
-unset MAILCHECK
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 
 
-# Change this to your console based IRC client of choice.
-
-export IRC_CLIENT='irssi'
-
-# Set this to the command you use for todo.txt-cli
-
-export TODO="t"
-
-# Set vcprompt executable path for scm advance info in prompt (demula theme)
-# https://github.com/xvzf/vcprompt
-#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
-
-# Load Bash It
-source $BASH_IT/bash_it.sh
-
-### Added by the Heroku Toolbelt
-export PATH="$PATH:/usr/local/heroku/bin"
-
-export PATH="$PATH:/Users/Gebruiker/Broncode/personal/git-achievements"
-
-alias lla='ls -lrthG'
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
