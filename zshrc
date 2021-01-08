@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export PATH="/home/david/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -23,11 +30,19 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 # Fish-like auto suggestions
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle djui/alias-tips
+antigen bundle wwilsman/zsh-clean-project
+antigen bundle xorkevin/code-review-zsh
+antigen bundle caarlos0/git-add-remote
 antigen bundle soimort/translate-shell
 # antigen theme wzem
-antigen theme dpoggi
+# antigen theme dpoggi
+antigen theme romkatv/powerlevel10k
 # PyEnv plugin
 antigen bundle mattberther/zsh-pyenv
+antigen bundle peterhurford/git-aliases.zsh
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle Valiev/almostontop
 
 antigen apply
 
@@ -103,13 +118,12 @@ plugins=(
   python
   sudo
   sublime
-  terminator
   tmux
-  tmuxinator
   ubuntu
   vim-interaction
   vi-mode
   pipenv
+  git-flow-completion
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -146,8 +160,6 @@ export EDITOR='vim'
 # Add pip to path
 # PATH="$HOME/.local/bin:$PATH"
 
-source ~/.bin/tmuxinator.zsh
-
 alias j="fortune && bundle exec jekyll"
 alias js="fortune && bundle exec jekyll serve --draft --incremental"
 alias git="fortune && git-achievements"
@@ -159,3 +171,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 source $HOME/.rvm/scripts/rvm
 export JEKYLL_EDITOR=atom
 # eval "$(pyenv virtualenv-init -)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
